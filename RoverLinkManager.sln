@@ -1,15 +1,18 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26730.3
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoverLinkManager", "RoverLinkManager\RoverLinkManager.csproj", "{5F817400-1A3A-48DF-98A6-E7E5A3DC762F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoverLinkManager", "RoverLinkManager\RoverLinkManager.csproj", "{5F817400-1A3A-48DF-98A6-E7E5A3DC762F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoverLinkManager.ServiceInterface", "RoverLinkManager.ServiceInterface\RoverLinkManager.ServiceInterface.csproj", "{5B8FFF01-1E0B-477D-9D7F-93016C128B23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoverLinkManager.ServiceInterface", "RoverLinkManager.ServiceInterface\RoverLinkManager.ServiceInterface.csproj", "{5B8FFF01-1E0B-477D-9D7F-93016C128B23}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoverLinkManager.ServiceModel", "RoverLinkManager.ServiceModel\RoverLinkManager.ServiceModel.csproj", "{0127B6CA-1B79-46A6-8307-B36836D107F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoverLinkManager.ServiceModel", "RoverLinkManager.ServiceModel\RoverLinkManager.ServiceModel.csproj", "{0127B6CA-1B79-46A6-8307-B36836D107F0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoverLinkManager.Tests", "RoverLinkManager.Tests\RoverLinkManager.Tests.csproj", "{455EC1EF-134F-4CD4-9C78-E813E4E6D8F6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RoverLinkManager.Tests", "RoverLinkManager.Tests\RoverLinkManager.Tests.csproj", "{455EC1EF-134F-4CD4-9C78-E813E4E6D8F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoverLinkManager.Domain", "RoverLinkManager.Domain\RoverLinkManager.Domain.csproj", "{8C72483D-F748-46DE-9105-DE0E4221B921}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoverLinkManager.Infrastructure", "RoverLinkManager.Infrastructure\RoverLinkManager.Infrastructure.csproj", "{7C72AE0B-BB07-4248-B28D-60694650BC2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +36,14 @@ Global
 		{455EC1EF-134F-4CD4-9C78-E813E4E6D8F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{455EC1EF-134F-4CD4-9C78-E813E4E6D8F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{455EC1EF-134F-4CD4-9C78-E813E4E6D8F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8C72483D-F748-46DE-9105-DE0E4221B921}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8C72483D-F748-46DE-9105-DE0E4221B921}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8C72483D-F748-46DE-9105-DE0E4221B921}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8C72483D-F748-46DE-9105-DE0E4221B921}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C72AE0B-BB07-4248-B28D-60694650BC2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C72AE0B-BB07-4248-B28D-60694650BC2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C72AE0B-BB07-4248-B28D-60694650BC2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C72AE0B-BB07-4248-B28D-60694650BC2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
