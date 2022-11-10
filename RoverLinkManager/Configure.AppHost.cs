@@ -29,7 +29,7 @@ public class AppHost : AppHostBase, IHostingStartup
         var secretConfig = AppSettings.Get<SecretIdentifier>("AwsConfigurationSecrets");
 
         // Retrieve the secrets configuration from aws secrets
-        var settings = SecretsManager.GetSecret<ApplicationSettings>(secretConfig.Name, secretConfig.Region);
+        var settings = SecretsManager.GetSecret<Secrets>(secretConfig.Name, secretConfig.Region);
 
         if (settings is null)
         {
@@ -38,6 +38,6 @@ public class AppHost : AppHostBase, IHostingStartup
             throw new Exception("Unable to retrieve aws application settings.");
         }
 
-        container.AddSingleton<ApplicationSettings>(settings ?? new());
+        container.AddSingleton<Secrets>(settings ?? new());
     }
 }
