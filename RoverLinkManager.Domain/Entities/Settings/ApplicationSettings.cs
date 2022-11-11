@@ -8,6 +8,6 @@ using System.Threading.Tasks;
 namespace RoverLinkManager.Domain.Entities.Settings;
 public class ApplicationSettings
 {
-    [JsonPropertyName("email")]
-    public EmailSettings Email { get; set; }
+    [JsonPropertyName("email")] 
+    public EmailSettings Email { get; set; } = new();
 }

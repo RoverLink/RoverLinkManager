@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RoverLinkManager.Infrastructure.Secrets.AWS.Models;
+using RoverLinkManager.Domain.Entities.Secrets;
 using ServiceStack;
 using ServiceStack.Admin;
 using ServiceStack.Configuration;
@@ -17,8 +17,11 @@ public class ConfigureDb : IHostingStartup
     public void Configure(IWebHostBuilder builder) => builder
         .ConfigureServices((context, services) =>
         {
+            // Get the aws app secrets configuration from appsettings
+            var secretConfig = context.Configuration.GetSection("AwsConfigurationSecrets").Get<SecretIdentifier>();
 
-            var secrets = context.Configuration.Get<Secrets>();
+            var secrets = context.Configuration.GetSection(secretConfig.Name).Get<Secrets>();
+            var connString = secrets.Database.ToConnectionString();
 
             services.AddSingleton<IDbConnectionFactory>(new OrmLiteConnectionFactory(
                 context.Configuration.GetConnectionString("DefaultConnection")

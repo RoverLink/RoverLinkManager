@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 using RoverLinkManager.Domain.Entities.Settings;
 
-namespace RoverLinkManager.Infrastructure.Secrets.AWS.Models;
+namespace RoverLinkManager.Domain.Entities.Secrets;
 public class Secrets
 {
     [JsonPropertyName("settings")]
