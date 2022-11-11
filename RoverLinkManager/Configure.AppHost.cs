@@ -21,7 +21,7 @@ public class AppHost : AppHostBase, IHostingStartup
             // Configure ASP.NET Core IOC Dependencies
         });
 
-    public AppHost() : base("RoverLinkManager", typeof(MyServices).Assembly) {}
+    public AppHost() : base("RoverLink Manager", typeof(MyServices).Assembly) {}
 
     public override void Configure(Container container)
     {
