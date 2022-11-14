@@ -10,4 +10,5 @@ public class ApplicationSettings
 {
     [JsonPropertyName("email")] 
     public EmailSettings Email { get; set; } = new();
+    public string TimeZone { get; set; } = TimeZoneInfo.Local.Id;
 }
