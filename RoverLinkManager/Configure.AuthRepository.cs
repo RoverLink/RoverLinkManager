@@ -43,7 +43,7 @@ namespace RoverLinkManager
             .ConfigureAppHost(appHost => {
                 var authRepo = appHost.Resolve<IAuthRepository>();
                 authRepo.InitSchema();
-                // CreateUser(authRepo, "admin@email.com", "Admin User", "p@55wOrd", roles:new[]{ RoleNames.Admin });
+                CreateUser(authRepo, "admin@email.com", "Admin User", "Password123", roles:new[]{ RoleNames.Admin });
             }, afterConfigure: appHost => 
                 appHost.AssertPlugin<AuthFeature>().AuthEvents.Add(new AppUserAuthEvents()));
 

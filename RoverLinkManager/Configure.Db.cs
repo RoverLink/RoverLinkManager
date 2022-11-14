@@ -24,9 +24,8 @@ public class ConfigureDb : IHostingStartup
             var connString = secrets.Database.ToConnectionString();
 
             services.AddSingleton<IDbConnectionFactory>(new OrmLiteConnectionFactory(
-                context.Configuration.GetConnectionString("DefaultConnection")
-                ?? "Server=localhost;Database=test;User Id=test;Password=test;MultipleActiveResultSets=True;",
-                SqlServer2012Dialect.Provider));
+                connString,
+                PostgreSqlDialect.Provider));
         })
         .ConfigureAppHost(appHost => {
             // Enable built-in Database Admin UI at /admin-ui/database
