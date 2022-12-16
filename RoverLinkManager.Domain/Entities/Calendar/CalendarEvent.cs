@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoverLinkManager.Domain.Entities.Tags;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace RoverLinkManager.Domain.Entities.Calendar
         public string Description { get; set; } = string.Empty;
         public DateTime Start { get; set; } = DateTime.UtcNow;
         public DateTime End { get; set; } = DateTime.UtcNow;
+        public int RepeatEvery { get; set; }
+        public List<Tag> Tags { get; set; } = new List<Tag>(); // I dont know if this is needed if we use #tag in content
     }
 }
