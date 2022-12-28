@@ -25,6 +25,12 @@ public class ConfigureDb : IHostingStartup
             var secretConfig = context.Configuration.GetSection("AwsConfigurationSecrets").Get<SecretIdentifier>();
 
             var secrets = context.Configuration.GetSection(secretConfig.Name).Get<Secrets>();
+
+            if (secrets == null)
+            {
+	            throw new Exception("Unable to retrieve AWS configuration secrets");
+            }
+
             var connString = secrets.Database.ToConnectionString();
 
             services.AddSingleton<IDbConnectionFactory>(new OrmLiteConnectionFactory(

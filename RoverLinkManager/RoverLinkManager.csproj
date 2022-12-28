@@ -27,6 +27,7 @@
     <ProjectReference Include="..\RoverLinkManager.Infrastructure\RoverLinkManager.Infrastructure.csproj" />
     <ProjectReference Include="..\RoverLinkManager.ServiceInterface\RoverLinkManager.ServiceInterface.csproj" />
     <ProjectReference Include="..\RoverLinkManager.ServiceModel\RoverLinkManager.ServiceModel.csproj" />
+    <ProjectReference Include="..\ServiceStack.Jwks\ServiceStack.Jwks.csproj" />
   </ItemGroup>
 
 </Project>
