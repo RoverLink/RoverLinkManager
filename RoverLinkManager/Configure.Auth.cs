@@ -1,10 +1,15 @@
+using System.Drawing;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
+using Amazon.Runtime.Internal;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.JsonWebTokens;
 using ServiceStack;
 using ServiceStack.Auth;
 using ServiceStack.FluentValidation;
+using ServiceStack.Host;
 using ServiceStack.Jwks;
+using ServiceStack.Text;
 
 [assembly: HostingStartup(typeof(RoverLinkManager.ConfigureAuth))]
 
@@ -53,14 +58,34 @@ namespace RoverLinkManager
 			        new IAuthProvider[]
 			        {
                         // We aren't creating new sessions so it's okay to create a private key (it won't be used)
-				        new JwtAuthProviderReader(appSettings) { HashAlgorithm  = "RS256", PrivateKey = RsaUtils.CreatePrivateKeyParams(RsaKeyLengths.Bit2048)},
+				        new JwtAuthJwksProviderReader(appSettings)
+				        {
+					        HashAlgorithm  = "RS256", 
+					        PrivateKey = RsaUtils.CreatePrivateKeyParams(RsaKeyLengths.Bit2048),
+					        UseTokenCookie = false,
+                            PreValidateJwtPayloadFilter = (Dictionary<string, string> payload) =>
+                            {
+	                            return null;
+                            },
+                            ValidateToken = (JsonObject json, ServiceStack.Web.IRequest request) =>
+                            {
+	                            var jwtProvider = AuthenticateService.GetJwtAuthProvider();
+	                            var token = request.GetJwtToken();
+	                            var jwksFeature = appHost.Plugins.First(x => x is JwksFeature) as JwksFeature;
+	                            var jsonWebTokenHandler = new JsonWebTokenHandler();
+	                            var jwt = jsonWebTokenHandler.ReadToken(token);
+                                // var keyid is jwt.Kid
+                                // does keyid exist already?
+                                return true;
+                            }
+                        },
 				        //,
 				        //new CredentialsAuthProvider(appSettings),     /* Sign In with Username / Password credentials */
 				        //new FacebookAuthProvider(appSettings),        /* Create App https://developers.facebook.com/apps */
 				        //new GoogleAuthProvider(appSettings),          /* Create App https://console.developers.google.com/apis/credentials */
 				        //new MicrosoftGraphAuthProvider(appSettings),  /* Create App https://apps.dev.microsoft.com */
 			        });
-
+                
                 authFeature.RegisterPlugins.Add(new JwksFeature()
                 {
                     OpenIdDiscoveryUrl = $"https://securetoken.google.com/{firebaseId}/.well-known/openid-configuration"
