@@ -58,27 +58,7 @@ namespace RoverLinkManager
 			        new IAuthProvider[]
 			        {
                         // We aren't creating new sessions so it's okay to create a private key (it won't be used)
-				        new JwtAuthJwksProviderReader(appSettings)
-				        {
-					        HashAlgorithm  = "RS256", 
-					        PrivateKey = RsaUtils.CreatePrivateKeyParams(RsaKeyLengths.Bit2048),
-					        UseTokenCookie = false,
-                            PreValidateJwtPayloadFilter = (Dictionary<string, string> payload) =>
-                            {
-	                            return null;
-                            },
-                            ValidateToken = (JsonObject json, ServiceStack.Web.IRequest request) =>
-                            {
-	                            var jwtProvider = AuthenticateService.GetJwtAuthProvider();
-	                            var token = request.GetJwtToken();
-	                            var jwksFeature = appHost.Plugins.First(x => x is JwksFeature) as JwksFeature;
-	                            var jsonWebTokenHandler = new JsonWebTokenHandler();
-	                            var jwt = jsonWebTokenHandler.ReadToken(token);
-                                // var keyid is jwt.Kid
-                                // does keyid exist already?
-                                return true;
-                            }
-                        },
+				        new JwtAuthFirebaseProvider(appSettings, firebaseId).Initialize(),
 				        //,
 				        //new CredentialsAuthProvider(appSettings),     /* Sign In with Username / Password credentials */
 				        //new FacebookAuthProvider(appSettings),        /* Create App https://developers.facebook.com/apps */
@@ -86,10 +66,12 @@ namespace RoverLinkManager
 				        //new MicrosoftGraphAuthProvider(appSettings),  /* Create App https://apps.dev.microsoft.com */
 			        });
                 
+                /*
                 authFeature.RegisterPlugins.Add(new JwksFeature()
                 {
                     OpenIdDiscoveryUrl = $"https://securetoken.google.com/{firebaseId}/.well-known/openid-configuration"
                 });
+                */
 
                 appHost.Plugins.Add(authFeature);
 

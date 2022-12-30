@@ -9,9 +9,10 @@ namespace ServiceStack.Jwks {
     public class GetJsonWebKeySet : IGet, IPost, IReturn<JsonWebKeySetResponse> { }
 
     [DataContract]
-    public class JsonWebKeySetResponse {
+    public class JsonWebKeySetResponse
+    {
 
-        [DataMember(Name = "keys")]
-        public List<JsonWebKey> Keys { get; set; }
+	    [DataMember(Name = "keys")]
+	    public List<JsonWebKey> Keys { get; set; } = new();
     }
 }
