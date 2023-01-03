@@ -53,12 +53,11 @@ namespace RoverLinkManager
                 //var pkey = cert.PublicKey.GetRSAPublicKey();
 		        //var pkeyRsaParameters = pkey.ExportParameters(false);
 
-		        var firebaseId = "roverhub-roverlink";
 		        var authFeature = new AuthFeature(() => new CustomUserSession(),
 			        new IAuthProvider[]
 			        {
                         // We aren't creating new sessions so it's okay to create a private key (it won't be used)
-				        new JwtAuthFirebaseProvider(appSettings, firebaseId).Initialize(),
+				        new JwtAuthFirebaseProvider(appSettings)
 				        //,
 				        //new CredentialsAuthProvider(appSettings),     /* Sign In with Username / Password credentials */
 				        //new FacebookAuthProvider(appSettings),        /* Create App https://developers.facebook.com/apps */

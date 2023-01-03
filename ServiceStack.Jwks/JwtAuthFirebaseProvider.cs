@@ -18,9 +18,15 @@ public class JwtAuthFirebaseProvider : JwtAuthProviderReader
 
 	public IRestClient JwksClient { get; set; } = new JsonServiceClient();
 
-	public JwtAuthFirebaseProvider(IAppSettings appSettings, string firebaseProjectId) : base(appSettings)
+	public JwtAuthFirebaseProvider(IAppSettings appSettings) : base(appSettings)
 	{
-		_firebaseProjectId = firebaseProjectId;
+	}
+
+	public override void Init(IAppSettings appSettings = null)
+	{
+		base.Init(appSettings);
+
+		_firebaseProjectId = appSettings.Get("jwt.FirebaseProjectId", "");
 
 		Audience = _firebaseProjectId;
 		OpenIdDiscoveryUrl = $"https://securetoken.google.com/{_firebaseProjectId}/.well-known/openid-configuration";
@@ -39,27 +45,23 @@ public class JwtAuthFirebaseProvider : JwtAuthProviderReader
 			// Validate expiration
 			if (jwt.ValidTo < DateTime.UtcNow)
 				return false;
-			
+
 			// Check to see if we have a public key in hand that can decode this token
 			if (!_publicKeyIds.ContainsKey(jwt.Header.Kid))
 			{
 				var keySet = RetrieveKeySet();
 				LoadKeySet(keySet);
 			}
-			
+
 			return true;
 		};
-	}
 
-	public JwtAuthFirebaseProvider Initialize()
-    {
 		RetrieveOpenIdDiscovery();
 
-	    var keySet = RetrieveKeySet();
-	    LoadKeySet(keySet);
+		var keySet = RetrieveKeySet();
+		LoadKeySet(keySet);
 
-	    return this;
-    }
+	}
 
 	public override Task<object> AuthenticateAsync(IServiceBase authService, IAuthSession session, Authenticate request,
 		CancellationToken token = new CancellationToken())
@@ -93,7 +95,7 @@ public class JwtAuthFirebaseProvider : JwtAuthProviderReader
 	{
 		if (keySet?.Keys.IsEmpty() ?? true)
 		{
-			Log.Error($"Unable to load KeySet in JwtAuthFirebaseProvider - Expecting at least one key from keyset {keySet.Dump()}");
+			Log.Error($"Expecting at least one key from keyset {keySet.Dump()}");
 
 			return;
 		}
