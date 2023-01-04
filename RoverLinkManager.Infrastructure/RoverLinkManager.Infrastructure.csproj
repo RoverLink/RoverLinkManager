@@ -20,9 +20,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\RoverLinkManager.Domain\RoverLinkManager.Domain.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Secrets\AWS\Models\" />
-	</ItemGroup>
 	
 </Project>
