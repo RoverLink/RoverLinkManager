@@ -1,7 +1,6 @@
 using System.Text;
 using System.Text.Json;
 using Funq;
-using RoverLinkManager.Infrastructure.Secrets.AWS;
 using ServiceStack;
 using RoverLinkManager.ServiceInterface;
 using RoverLinkManager.Domain.Entities.Settings;

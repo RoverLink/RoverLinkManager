@@ -1,6 +1,6 @@
 ﻿using ServiceStack.DataAnnotations;
 
-namespace JalexApi.Domain.Enum.AccessControl;
+namespace RoverLinkManager.Domain.Enum.AccessControl;
 
 [EnumAsInt]
 public enum FollowAccessLevel
