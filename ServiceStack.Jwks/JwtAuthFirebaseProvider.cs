@@ -26,7 +26,15 @@ public class JwtAuthFirebaseProvider : JwtAuthProviderReader
 	{
 		base.Init(appSettings);
 
-		_firebaseProjectId = appSettings.Get("jwt.FirebaseProjectId", "");
+		_firebaseProjectId = appSettings?.Get("jwt.FirebaseProjectId", "") ?? string.Empty;
+
+        if (string.IsNullOrEmpty(_firebaseProjectId))
+        {
+            var msg = "Firebase project id is missing from appsettings";
+			
+            Log.Error(msg);
+            throw new Exception(msg);
+        }
 
 		Audience = _firebaseProjectId;
 		OpenIdDiscoveryUrl = $"https://securetoken.google.com/{_firebaseProjectId}/.well-known/openid-configuration";
@@ -34,7 +42,7 @@ public class JwtAuthFirebaseProvider : JwtAuthProviderReader
 		PrivateKey = RsaUtils.CreatePrivateKeyParams(RsaKeyLengths.Bit2048);
 		UseTokenCookie = false;
 		ValidateToken = (JsonObject json, ServiceStack.Web.IRequest request) =>
-		{
+		{   
 			var token = request.GetJwtToken();
 			var jwt = new JwtSecurityToken(token);
 
