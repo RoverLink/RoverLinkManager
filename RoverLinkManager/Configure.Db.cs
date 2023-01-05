@@ -16,6 +16,10 @@ namespace RoverLinkManager;
 public class ConfigureDb : IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) => builder
+        .ConfigureAppConfiguration(build =>
+        {
+            build.AddSecretsManager();
+        })
         .ConfigureServices((context, services) =>
         {
             // Get the aws app secrets configuration from appsettings

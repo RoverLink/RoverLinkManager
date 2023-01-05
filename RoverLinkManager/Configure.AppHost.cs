@@ -14,10 +14,6 @@ namespace RoverLinkManager;
 public class AppHost : AppHostBase, IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) => builder
-        .ConfigureAppConfiguration(build =>
-        {
-            build.AddSecretsManager();
-        })
         .ConfigureServices((context, services) => {
             // Configure ASP.NET Core IOC Dependencies
         });
