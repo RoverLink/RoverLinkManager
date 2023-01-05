@@ -4,6 +4,7 @@ using ServiceStack.Configuration;
 using System.Security.Cryptography;
 using System.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.Extensions.Configuration;
 using ServiceStack.Host;
 using ServiceStack.Text;
 
@@ -24,13 +25,14 @@ public class JwtAuthFirebaseProvider : JwtAuthProviderReader
 
 	public override void Init(IAppSettings appSettings = null)
 	{
+		
 		base.Init(appSettings);
 
-		_firebaseProjectId = appSettings?.Get("jwt.FirebaseProjectId", "") ?? string.Empty;
+		_firebaseProjectId = appSettings?.Get("firebaseid", "") ?? string.Empty;
 
         if (string.IsNullOrEmpty(_firebaseProjectId))
         {
-            var msg = "Firebase project id is missing from appsettings";
+            var msg = "Firebase project id 'firebaseid' is missing from appsettings";
 			
             Log.Error(msg);
             throw new Exception(msg);

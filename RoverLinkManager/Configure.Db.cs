@@ -33,6 +33,8 @@ public class ConfigureDb : IHostingStartup
 
             var connString = secrets.Database.ToConnectionString();
 
+            services.AddSingleton<Secrets>(secrets);
+
             services.AddSingleton<IDbConnectionFactory>(new OrmLiteConnectionFactory(
                 connString,
                 PostgreSqlDialect.Provider));
