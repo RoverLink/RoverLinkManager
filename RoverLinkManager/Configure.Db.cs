@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RoverLinkManager.Domain.Entities.Secrets;
+using RoverLinkManager.Domain.Entities.Settings;
 using ServiceStack;
 using ServiceStack.Admin;
 using ServiceStack.Configuration;
@@ -15,29 +16,25 @@ namespace RoverLinkManager;
 public class ConfigureDb : IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) => builder
-        .ConfigureAppConfiguration(build =>
-        {
-            build.AddSecretsManager();
-        })
         .ConfigureServices((context, services) =>
         {
             // Get the aws app secrets configuration from appsettings
             var secretConfig = context.Configuration.GetSection("AwsConfigurationSecrets").Get<SecretIdentifier>();
 
-            var secrets = context.Configuration.GetSection(secretConfig.Name).Get<Secrets>();
+            var settings = context.Configuration.GetSection(secretConfig.Name).Get<ApplicationSettings>();
 
-            if (secrets == null)
+            if (settings == null)
             {
-	            throw new Exception("Unable to retrieve AWS configuration secrets");
+                throw new Exception("Unable to retrieve AWS configuration secrets");
             }
 
-            var connString = secrets.Database.ToConnectionString();
-
-            services.AddSingleton<Secrets>(secrets);
+            services.AddSingleton<ApplicationSettings>(settings);
+            var connString = settings.Database.ToConnectionString();
 
             services.AddSingleton<IDbConnectionFactory>(new OrmLiteConnectionFactory(
                 connString,
                 PostgreSqlDialect.Provider));
+
         })
         .ConfigureAppHost(appHost => {
             // Enable built-in Database Admin UI at /admin-ui/database

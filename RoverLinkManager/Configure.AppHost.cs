@@ -1,9 +1,11 @@
 using System.Text;
 using System.Text.Json;
 using Funq;
+using RoverLinkManager.Domain.Entities.Secrets;
 using ServiceStack;
 using RoverLinkManager.ServiceInterface;
 using RoverLinkManager.Domain.Entities.Settings;
+using RoverLinkManager.Infrastructure.GetStream.Services;
 
 [assembly: HostingStartup(typeof(RoverLinkManager.AppHost))]
 
@@ -12,7 +14,11 @@ namespace RoverLinkManager;
 public class AppHost : AppHostBase, IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) => builder
-        .ConfigureServices(services => {
+        .ConfigureAppConfiguration(build =>
+        {
+            build.AddSecretsManager();
+        })
+        .ConfigureServices((context, services) => {
             // Configure ASP.NET Core IOC Dependencies
         });
 
@@ -25,7 +31,6 @@ public class AppHost : AppHostBase, IHostingStartup
             UseSameSiteCookies = true,
         });
 
-        //AppSettings.Set<Secrets>("Secrets", settings);
-        //container.AddSingleton<Secrets>(settings ?? new());
+        container.AddTransient<StreamConnectionFactory>();
     }
 }

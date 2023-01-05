@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
 
-namespace RoverLinkManager.Domain.Entities.Secrets;
+namespace RoverLinkManager.Domain.Entities.Settings;
 public enum DbType
 {
     [EnumMember(Value = "unknown")]
@@ -12,7 +12,7 @@ public enum DbType
     PostgreSql
 }
 
-public class DbCredentialsSecret
+public class DatabaseSettings
 {
     [JsonPropertyName("username")]
     public string? Username { get; set; }

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\RoverLinkManager.Infrastructure\RoverLinkManager.Infrastructure.csproj" />
     <ProjectReference Include="..\RoverLinkManager.ServiceModel\RoverLinkManager.ServiceModel.csproj" />
   </ItemGroup>
 

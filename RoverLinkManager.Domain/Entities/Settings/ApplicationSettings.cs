@@ -8,7 +8,18 @@ using System.Threading.Tasks;
 namespace RoverLinkManager.Domain.Entities.Settings;
 public class ApplicationSettings
 {
+    [JsonPropertyName("firebaseid")]
+    public string FirebaseId { get; set; } = string.Empty;
+
     [JsonPropertyName("email")] 
     public EmailSettings Email { get; set; } = new();
+
+    [JsonPropertyName("database")]
+    public DatabaseSettings Database { get; set; } = new();
+
+    [JsonPropertyName("stream")]
+    public StreamSettings Stream { get; set; } = new();
+
+    [JsonPropertyName("timezone")]
     public string TimeZone { get; set; } = TimeZoneInfo.Local.Id;
 }
