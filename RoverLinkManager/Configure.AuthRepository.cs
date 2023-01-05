@@ -1,3 +1,4 @@
+using RoverLinkManager.Domain.Entities.Identity;
 using ServiceStack;
 using ServiceStack.Web;
 using ServiceStack.Data;
@@ -8,13 +9,7 @@ using ServiceStack.Configuration;
 
 namespace RoverLinkManager
 {
-    // Custom User Table with extended Metadata properties
-    public class AppUser : UserAuth
-    {
-        public string? ProfileUrl { get; set; }
-        public string? LastLoginIp { get; set; }
-        public DateTime? LastLoginDate { get; set; }
-    }
+
 
     public class AppUserAuthEvents : AuthEvents
     {
