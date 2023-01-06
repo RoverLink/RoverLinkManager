@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RoverLinkManager.Domain.Entities.Settings;
+using ServiceStack.Configuration;
 using Stream;
 
 namespace RoverLinkManager.Infrastructure.GetStream.Services;
