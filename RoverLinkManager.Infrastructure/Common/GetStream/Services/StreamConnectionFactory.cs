@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RoverLinkManager.Domain.Entities.Settings;
-using ServiceStack.Configuration;
+﻿using RoverLinkManager.Domain.Entities.Settings;
 using Stream;
 
-namespace RoverLinkManager.Infrastructure.GetStream.Services;
+namespace RoverLinkManager.Infrastructure.Common.GetStream.Services;
 
 public class StreamConnectionFactory : ServiceBase<StreamConnectionFactory>
 {

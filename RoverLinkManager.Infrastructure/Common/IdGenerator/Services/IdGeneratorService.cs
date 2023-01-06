@@ -106,7 +106,7 @@ public class IdGeneratorService : ServiceBase<IdGeneratorService>
     {
         long id = -1;
 
-        bool success = Hasher.TryDecodeSingleLong(shortId, out id);
+        bool success = Hasher.TryDecodeSingleLong(shortId.ToLower(), out id);
 
         if (!success)
             return null;
