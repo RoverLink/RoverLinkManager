@@ -23,14 +23,16 @@ public class IdGeneratorService : ServiceBase<IdGeneratorService>
 
     public IdGeneratorService(IAppSettings appSettings, ApplicationSettings settings)
     {
-		// TODO: Get machine id from appSettings
+        // Get generator id from app settings
         int generatorId = appSettings.Get<int>("GeneratorId");
 
+        // Make sure we also have a salt configured for HashId
         if (String.IsNullOrEmpty(settings.HashIdSalt))
         {
             LogAndThrowFatalException("HashId salt is missing from secrets configuration");
         }
         
+        // Get the generator and hashId hasher
 		Generator ??= _generatorInstance = new IdGen.IdGenerator(generatorId, new IdGeneratorOptions(IdStructure, new DefaultTimeSource(Epoch)));
         Hasher ??= _hashidsInstance = new Hashids(settings.HashIdSalt, alphabet: "abcdefghijklmnopqrstuvwxyz1234567890");
     }
