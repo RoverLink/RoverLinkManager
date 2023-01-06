@@ -12,6 +12,7 @@ public class AppUser : UserAuth
     public Building Building { get; set; } = new();
 	public string Position { get; set; } = string.Empty;
 	public string Bio { get; set; } = string.Empty;
+    public int Followers { get; set; }
     public string? ProfileUrl { get; set; }
     public string? LastLoginIp { get; set; }
     public DateTime? LastLoginDate { get; set; }
