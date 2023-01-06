@@ -12,4 +12,8 @@
     <PackageReference Include="stream-net" Version="6.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

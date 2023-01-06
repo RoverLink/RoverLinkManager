@@ -11,6 +11,9 @@ public class ApplicationSettings
     [JsonPropertyName("firebaseid")]
     public string FirebaseId { get; set; } = string.Empty;
 
+    [JsonPropertyName("hashidsalt")]
+    public string HashIdSalt { get; set; } = string.Empty;
+
     [JsonPropertyName("email")] 
     public EmailSettings Email { get; set; } = new();
 

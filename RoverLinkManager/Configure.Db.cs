@@ -24,7 +24,7 @@ public class ConfigureDb : IHostingStartup
         {
             // Get the aws app secrets configuration from appsettings
             var secretConfig = context.Configuration.GetSection("AwsConfigurationSecrets").Get<SecretIdentifier>();
-
+            
             var settings = context.Configuration.GetSection(secretConfig.Name).Get<ApplicationSettings>();
 
             if (settings == null)
