@@ -21,10 +21,10 @@ public class IdGeneratorService : ServiceBase<IdGeneratorService>
     private IdGen.IdGenerator Generator { get; }
     private Hashids Hasher { get; }
 
-    public IdGeneratorService(IAppSettings appSettings, ApplicationSettings settings)
+    public IdGeneratorService(ApplicationSettings settings)
     {
         // Get generator id from app settings
-        int generatorId = appSettings.Get<int>("GeneratorId");
+        int generatorId = settings.GeneratorId;
 
         // Make sure we also have a salt configured for HashId
         if (String.IsNullOrEmpty(settings.HashIdSalt))

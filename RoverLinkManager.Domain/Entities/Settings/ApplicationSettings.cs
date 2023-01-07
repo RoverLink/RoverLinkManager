@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 namespace RoverLinkManager.Domain.Entities.Settings;
 public class ApplicationSettings
 {
+    [JsonPropertyName("GeneratorId")]
+    public int GeneratorId { get; set; }
+
     [JsonPropertyName("firebaseid")]
     public string FirebaseId { get; set; } = string.Empty;
 

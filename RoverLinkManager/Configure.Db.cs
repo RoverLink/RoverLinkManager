@@ -18,14 +18,17 @@ public class ConfigureDb : IHostingStartup
     public void Configure(IWebHostBuilder builder) => builder
         .ConfigureAppConfiguration(build =>
         {
-            build.AddSecretsManager();
+            build.AddSecretsManager(configurator: options =>
+            {
+	            options.KeyGenerator = (entry, key) =>
+	            {
+		            return key.SplitOnFirst(':').Last();
+	            };
+            });
         })
         .ConfigureServices((context, services) =>
         {
-            // Get the aws app secrets configuration from appsettings
-            var secretConfig = context.Configuration.GetSection("AwsConfigurationSecrets").Get<SecretIdentifier>();
-            
-            var settings = context.Configuration.GetSection(secretConfig.Name).Get<ApplicationSettings>();
+	        var settings = context.Configuration.Get<ApplicationSettings>();
 
             if (settings == null)
             {
