@@ -22,7 +22,7 @@ public class LinkServices : Service
     public async Task<object> Any(LinkRequest request)
     {
         var link = await _linkManager.GetShortLinkAsync(request.ShortId, true);
-
+        
         if (link == null) 
             return new {};
 

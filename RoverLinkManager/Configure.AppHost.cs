@@ -8,6 +8,7 @@ using RoverLinkManager.Domain.Entities.Settings;
 using RoverLinkManager.Infrastructure.Common.GetStream.Services;
 using RoverLinkManager.Infrastructure.Common.IdGenerator.Services;
 using RoverLinkManager.Infrastructure.LinkManager.Services;
+using RoverLinkManager.Infrastructure.UserManager.Services;
 
 [assembly: HostingStartup(typeof(RoverLinkManager.AppHost))]
 
@@ -32,5 +33,6 @@ public class AppHost : AppHostBase, IHostingStartup
         container.AddTransient<StreamConnectionFactory>();
         container.AddSingleton<IdGeneratorService>();
         container.AddSingleton<LinkManagerService>();
+        container.AddSingleton<UserManagerService>();
     }
 }

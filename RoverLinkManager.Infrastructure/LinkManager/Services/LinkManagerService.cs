@@ -68,7 +68,7 @@ public class LinkManagerService
     public async Task<Link?> CreateShortLinkAsync (string url)
     {
         var re = new Regex(_urlRegex);
-
+        
         // Check to see if the url is valid
         if (string.IsNullOrEmpty(url) || !re.IsMatch(url))
             return null;

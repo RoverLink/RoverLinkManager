@@ -31,10 +31,21 @@ namespace RoverLinkManager
     public class ConfigureAuthRepository : IHostingStartup
     {
         public void Configure(IWebHostBuilder builder) => builder
-            .ConfigureServices(services => services.AddSingleton<IAuthRepository>(c =>
-                new OrmLiteAuthRepository<AppUser, UserAuthDetails>(c.Resolve<IDbConnectionFactory>()) {
-                    UseDistinctRoleTables = true
-                }))
+            .ConfigureServices(services =>
+            {
+	            services.AddSingleton<IAuthRepository>(c =>
+		            new OrmLiteAuthRepository<AppUser, UserAuthDetails>(c.Resolve<IDbConnectionFactory>())
+		            {
+			            UseDistinctRoleTables = true
+		            });
+
+	            services.AddSingleton<IAuthRepositoryAsync>(c =>
+		            new OrmLiteAuthRepository<AppUser, UserAuthDetails>(c.Resolve<IDbConnectionFactory>())
+		            {
+			            UseDistinctRoleTables = true
+		            });
+
+            })
             .ConfigureAppHost(appHost => {
                 var authRepo = appHost.Resolve<IAuthRepository>();
                 authRepo.InitSchema();

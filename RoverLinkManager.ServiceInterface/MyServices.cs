@@ -1,5 +1,6 @@
 using RoverLinkManager.Infrastructure.Common.IdGenerator.Models;
 using RoverLinkManager.Infrastructure.Common.IdGenerator.Services;
+using RoverLinkManager.Infrastructure.UserManager.Services;
 using ServiceStack;
 using RoverLinkManager.ServiceModel;
 using ServiceStack.Auth;
@@ -12,7 +13,7 @@ public class MyServices : Service
     private IdGeneratorService _idGenerator;
 
     // Example of using IOC to get the stream connection factory
-    public MyServices(IdGeneratorService idGenerator)
+    public MyServices(IdGeneratorService idGenerator, UserManagerService test)
     {
         _idGenerator = idGenerator;
     }
