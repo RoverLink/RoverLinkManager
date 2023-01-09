@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RoverLinkManager.Domain.Entities.Identity;
+using RoverLinkManager.Domain.Enum.Announcement;
 using ServiceStack.DataAnnotations;
 
 namespace RoverLinkManager.Domain.Entities.Announcements;
@@ -32,7 +33,8 @@ public class Announcement
 
     public DateTime? ScheduledTime { get; set; }
 
-    public string Status { get; set; }
+    [Default(0)]
+    public AnnouncementStatus Status { get; set; } = AnnouncementStatus.Draft;
 
     public bool IsDeleted { get; set; } = false;
 
