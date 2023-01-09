@@ -22,5 +22,6 @@ public class Building
     public string PhoneNumber { get; set; } = string.Empty;
     [Reference]
 	public Building? ParentBuilding { get; set; }
-	public long? ParentBuildingId { get; set; }
+	[ForeignKey(typeof(Building))]
+	public long? ParentId { get; set; }
 }

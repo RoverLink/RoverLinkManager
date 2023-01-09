@@ -12,6 +12,26 @@ namespace RoverLinkManager.Migrations;
 /// </summary>
 public class Migration1000 : MigrationBase
 {
+    public class Building
+    {
+        [PrimaryKey]
+        [AutoIncrement]
+        public long Id { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Address { get; set; } = string.Empty;
+        public string Address2 { get; set; } = string.Empty;
+        public string City { get; set; } = string.Empty;
+        public string State { get; set; } = string.Empty;
+        public string Country { get; set; } = string.Empty;
+        public string PostalCode { get; set; } = string.Empty;
+        public List<string> GeoCoordinates { get; set; } = new();
+        public string PhoneNumber { get; set; } = string.Empty;
+        [Reference]
+        public Building? ParentBuilding { get; set; }
+        [ForeignKey(typeof(Building))]
+        public long? ParentId { get; set; }
+    }
+
     public class UserAuth : IUserAuth
     {
         [AutoIncrement]
@@ -133,7 +153,12 @@ public class Migration1000 : MigrationBase
     class AppUser : UserAuth
     {
         [Index]
-        public string? FirebaseUid { get; set; }
+        public string FirebaseUid { get; set; } = string.Empty;
+        public bool IsOrganizationMember { get; set; } = false;
+        [ForeignKey(typeof(Building))]
+        public long? BuildingId { get; set; }
+        [Reference]
+        public Building Building { get; set; } = new();
         public string Occupation { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         [Default(0)]
@@ -141,10 +166,11 @@ public class Migration1000 : MigrationBase
         [Default(0)]
         public int FriendsCount { get; set; }
         public string HomeTown { get; set; } = string.Empty;
-        [DefaultValue(false)]
         public bool Notifications { get; set; }
         public string? ProfilePhotoUrl { get; set; }
         public string? ProfileCoverUrl { get; set; }
+        public string? LastLoginIp { get; set; }
+        public DateTime? LastLoginDate { get; set; }
         public bool Verified { get; set; }
     }
 
@@ -161,6 +187,7 @@ public class Migration1000 : MigrationBase
 
     public override void Up()
     {
+        Db.CreateTable<Building>();
         Db.CreateTable<UserAuthRole>();
         Db.CreateTable<UserAuthDetails>();
         Db.CreateTable<AppUser>();
@@ -182,5 +209,6 @@ public class Migration1000 : MigrationBase
         Db.DropTable<AppUser>();
         Db.DropTable<UserAuthDetails>();
         Db.DropTable<UserAuthRole>();
+        Db.DropTable<Building>();
     }
 }
