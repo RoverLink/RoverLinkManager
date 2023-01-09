@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using RoverLinkManager.Domain.Entities;
 using RoverLinkManager.Domain.Entities.Identity;
 using ServiceStack.Auth;
 using ServiceStack.Data;
@@ -26,11 +27,25 @@ public class UserManagerService
         _dbConnectionFactory = dbConnectionFactory;
 
         //var users = _authRepo.GetUserAuthsAsync().Result;
-        //_authRepo.
-        
     }
 
-    public async Task<List<AppUser>> FindUsersAsync(string query = "", int pageNumber = 1, int pageSize = 25)
+    public Expression<Func<AppUser, bool>> DisplayNameStartsWith(string name) => x => x.DisplayName.StartsWith(name);
+    public Expression<Func<AppUser, bool>> DisplayNameContains(string name) => x => x.DisplayName.Contains(name);
+
+    /// <summary>
+    /// To build the where predicate it is possible to use predicate builder extensions
+    /// See http://www.albahari.com/nutshell/predicatebuilder.aspx
+    ///     var predicate = PredicateBuilder.True<AppUser>();  // Start the query chain with a true value to do a search for all terms
+    ///     predicate = predicate.And(user => user.DisplayName.StartsWith(query));  // Chain along additional terms with And
+    ///
+    /// Example call:
+    /// var users = await FindUsersAsync(x => x.DisplayName.Contains("Matt"), 1, 25);
+    /// </summary>
+    /// <param name="where"></param>
+    /// <param name="pageNumber"></param>
+    /// <param name="pageSize"></param>
+    /// <returns></returns>
+    public async Task<List<AppUser>> FindUsersAsync(Expression<Func<AppUser, bool>>? where, int pageNumber = 1, int pageSize = 25)
     {
         using var db = await _dbConnectionFactory.OpenDbConnectionAsync();
 
@@ -40,18 +55,16 @@ public class UserManagerService
         // Limit to 100 records per page
         pageSize = pageSize > 100 ? pageSize : 25;
 
-        // See http://www.albahari.com/nutshell/predicatebuilder.aspx
+        // Create a dummy predicate that is always true
         var predicate = PredicateBuilder.True<AppUser>();
 
-        if (!string.IsNullOrEmpty(query))
-        {
-            // append query predicate onto the existing predicate
-            predicate = predicate.And(user => user.DisplayName.StartsWith(query));
-        }
+        // If where is not null add that expression to the predicate
+        if (where != null)
+	        predicate = predicate.And(where);
 
         var users = db.WhereLazy<AppUser>(predicate)
-                                       .Skip((pageNumber-1)*pageSize)
-                                       .Take(pageSize);
+										.Skip((pageNumber-1)*pageSize)
+										.Take(pageSize);
 
         db.Close();
 
