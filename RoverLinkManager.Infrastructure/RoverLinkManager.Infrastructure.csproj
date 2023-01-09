@@ -22,9 +22,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\RoverLinkManager.Domain\RoverLinkManager.Domain.csproj" />
 	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Common\Timezone\" />
-	</ItemGroup>
 	
 </Project>

@@ -10,6 +10,7 @@ public class AppUser : UserAuth
     [Index]
     public string FirebaseUid { get; set; } = string.Empty;
 	public bool IsOrganizationMember { get; set; } = false;
+    [ForeignKey(typeof(Building))]
     public long? BuildingId { get; set; }
     [Reference]
     public Building Building { get; set; } = new();
