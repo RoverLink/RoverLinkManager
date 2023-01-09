@@ -8,24 +8,19 @@ using RoverLinkManager.Domain.Enum.Announcement;
 using ServiceStack.DataAnnotations;
 
 namespace RoverLinkManager.Domain.Entities.Announcements;
+
 public class Announcement
 {
     public long Id { get; set; }
-    public string HashId { get; set; }
+    public string HashId { get; set; } = string.Empty;
 
-    public List<string> Tags { get; set; }
-
-    [Required]
-    [StringLength(100)]
-    public string EnglishSnippet { get; set; }
+    public List<string> Tags { get; set; } = new();
 
     [Required]
-    public string EnglishContent { get; set; }
+    public string Content { get; set; } = string.Empty;
 
-    [StringLength(100)]
-    public string SpanishSnippet { get; set; }
-
-    public string SpanishContent { get; set; }
+    [PgSqlJsonB]
+    public List<Translation> Translations { get; set; } = new();
 
     public DateTime CreatedTime { get; set; } = DateTime.UtcNow;
 
@@ -39,14 +34,10 @@ public class Announcement
     public bool IsDeleted { get; set; } = false;
 
     [ForeignKey(typeof(AppUser))] 
-    public int AuthorId { get; set; }
+    public int? AuthorId { get; set; }
     
     [Reference]
     public AppUser Author { get; set; }
 
-    [ForeignKey(typeof(AppUser))] 
-    public int EditorId { get; set; }
-
-    [Reference]
-    public AppUser Editor { get; set; }
+    public List<int> EditorIds { get; set; }
 }
