@@ -25,6 +25,7 @@ public class MyServices : Service
         var test = _idGenerator.ToSnowflakeId(snowflake.ShortId);
 
         IAuthSession session = this.GetSession();
+        
         return new HelloResponse { Result = $"Hello, {request.Name}! Your snowflake id is {snowflake.Id}, with a shortId of {snowflake.ShortId}" };
     }
 }

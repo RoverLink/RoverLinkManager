@@ -17,7 +17,9 @@ public class Building
 	public string State { get; set; } = string.Empty;
 	public string Country { get; set; } = string.Empty;
 	public string PostalCode { get; set; } = string.Empty;
-	[Reference]
+    public List<string> GeoCoordinates { get; set; } = new();
+    public string PhoneNumber { get; set; } = string.Empty;
+    [Reference]
 	public Building? ParentBuilding { get; set; }
-	public long ParentBuildingId { get; set; }
+	public long? ParentBuildingId { get; set; }
 }

@@ -15,6 +15,8 @@ namespace JalexApi.Domain.Entities.Activity;
 public class Post
 {
     public long Id { get; set; }
+    [Index(Unique = true)]
+    public string HashId { get; set; } = string.Empty;  // Set as encoded part of snowflake
     [Ignore]
     public string StreamForeignId => $"post:{Id}";  // The id (that we generate) that this post is known as in Getstream.io
     public string StreamId { get; set; } = string.Empty;  // Getstream.io's id for this post
@@ -33,7 +35,6 @@ public class Post
     /// </summary>
     public List<string> To { get; set; } = new();  // secondary target feeds - e.g. user:1234 or group:1234
     public int LikeCount { get; set; }
-    public int ShareCount { get; set; }
     public int CommentCount { get; set; }
     public double Popularity { get; set; } = 0;
     [StringLength(StringLengthAttribute.MaxText)] 

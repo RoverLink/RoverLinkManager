@@ -13,6 +13,6 @@ public class Link
     public long Id { get; set; }
     public string Url { get; set; } = string.Empty;
     public string ShortId { get; set; } = string.Empty;
-    public long Visits { get; set; } = 0;
+    public long VisitCount { get; set; } = 0;
     public DateTime CreatedDate { get; set; } = DateTime.UtcNow;
 }

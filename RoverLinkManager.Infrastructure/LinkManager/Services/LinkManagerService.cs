@@ -54,7 +54,7 @@ public class LinkManagerService
         if (link != null && incrementVisitCount)
         {
             // Only update the visits count
-            await db.UpdateAsync<Link>(new { Visits = link.Visits + 1 }, x => x.Id == link.Id);
+            await db.UpdateAsync<Link>(new { Visits = link.VisitCount + 1 }, x => x.Id == link.Id);
         }
 
         return link;

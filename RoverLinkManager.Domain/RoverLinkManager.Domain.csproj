@@ -9,11 +9,8 @@
   <ItemGroup>
     <PackageReference Include="Hashids.net" Version="1.6.1" />
     <PackageReference Include="ServiceStack" Version="6.*" />
+    <PackageReference Include="ServiceStack.OrmLite" Version="6.5.0" />
     <PackageReference Include="stream-net" Version="6.5.1" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
