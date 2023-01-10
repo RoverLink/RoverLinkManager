@@ -45,7 +45,7 @@ public class UserManagerService
     /// <param name="pageNumber"></param>
     /// <param name="pageSize"></param>
     /// <returns></returns>
-    public async Task<List<AppUser>> GetUsersAsync(Expression<Func<AppUser, bool>>? where, string? orderby = null, int? pageNumber = null, int? pageSize = null)
+    public async Task<List<AppUser>> GetUsersAsync(Expression<Func<AppUser, bool>>? where, string? orderBy = null, int? pageNumber = null, int? pageSize = null)
     {
         using var db = await _dbConnectionFactory.OpenDbConnectionAsync();
 
@@ -58,8 +58,8 @@ public class UserManagerService
 
         var users = db.WhereLazy<AppUser>(predicate) ?? new List<AppUser>();
 
-		if (orderby != null)
-            users = users.OrderBy(orderby);
+		if (orderBy != null)
+            users = users.OrderBy(orderBy);
 
 		if (pageNumber != null && pageSize != null)
 		{
