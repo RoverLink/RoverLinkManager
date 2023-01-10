@@ -45,15 +45,9 @@ public class UserManagerService
     /// <param name="pageNumber"></param>
     /// <param name="pageSize"></param>
     /// <returns></returns>
-    public async Task<List<AppUser>> FindUsersAsync(Expression<Func<AppUser, bool>>? where, int pageNumber = 1, int pageSize = 25)
+    public async Task<List<AppUser>> GetUsersAsync(Expression<Func<AppUser, bool>>? where, string? orderby = null, int? pageNumber = null, int? pageSize = null)
     {
         using var db = await _dbConnectionFactory.OpenDbConnectionAsync();
-
-        // Limit to page numbers of 1 or higher
-        pageNumber = pageNumber > 0 ? pageNumber : 1;
-
-        // Limit to 100 records per page
-        pageSize = pageSize > 100 ? pageSize : 25;
 
         // Create a dummy predicate that is always true
         var predicate = PredicateBuilder.True<AppUser>();
@@ -62,12 +56,26 @@ public class UserManagerService
         if (where != null)
 	        predicate = predicate.And(where);
 
-        var users = db.WhereLazy<AppUser>(predicate)
-										.Skip((pageNumber-1)*pageSize)
-										.Take(pageSize);
+        var users = db.WhereLazy<AppUser>(predicate) ?? new List<AppUser>();
 
-        db.Close();
+		if (orderby != null)
+            users = users.OrderBy(orderby);
 
-        return users.ToList();
+		if (pageNumber != null && pageSize != null)
+		{
+			// Limit to page numbers of 1 or higher
+			int pnum = pageNumber > 0 ? (int)pageNumber : 1;
+
+			// Limit to 100 records per page
+			int psize = pageSize > 100 ? (int)pageSize : 25;
+
+            users = users.Skip((pnum - 1) * psize).Take(psize);
+		}
+
+		var result = users.ToList();
+
+		db.Close();
+
+        return result;
     }
 }
