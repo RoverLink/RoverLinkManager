@@ -45,7 +45,7 @@ public class UserManagerService
     /// <param name="pageNumber"></param>
     /// <param name="pageSize"></param>
     /// <returns></returns>
-    public async Task<List<AppUser>> GetUsersAsync(Expression<Func<AppUser, bool>>? where, string? orderBy = null, int? pageNumber = null, int? pageSize = null)
+    public async Task<List<AppUser>> GetUsersAsync(Expression<Func<AppUser, bool>>? where = null, string? orderBy = null, int? pageNumber = null, int? pageSize = null)
     {
         using var db = await _dbConnectionFactory.OpenDbConnectionAsync();
 
@@ -78,4 +78,27 @@ public class UserManagerService
 
         return result;
     }
+
+    public async Task<AppUser?> GetUserByIdAsync(int id)
+    {
+	    using var db = await _dbConnectionFactory.OpenDbConnectionAsync();
+
+	    var user = await db.SingleAsync<AppUser>(x => x.Id == id);
+
+		db.Close();
+
+		return user;
+    }
+
+    public async Task<AppUser?> GetUserByFirebaseIdAsync(string uid)
+    {
+	    using var db = await _dbConnectionFactory.OpenDbConnectionAsync();
+
+	    var user = await db.SingleAsync<AppUser>(x => x.FirebaseUid == uid);
+
+	    db.Close();
+
+	    return user;
+    }
+
 }
