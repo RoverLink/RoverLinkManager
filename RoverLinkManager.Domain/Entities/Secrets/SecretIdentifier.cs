@@ -5,8 +5,8 @@ namespace RoverLinkManager.Domain.Entities.Secrets;
 public class SecretIdentifier
 {
     [JsonPropertyName("Name")]
-    public string Name { get; set; }
+    public string Name { get; set; } = string.Empty;
 
     [JsonPropertyName("Region")]
-    public string Region { get; set; }
+    public string Region { get; set; } = string.Empty;
 }

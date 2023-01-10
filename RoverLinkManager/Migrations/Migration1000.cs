@@ -10,6 +10,8 @@ namespace RoverLinkManager.Migrations;
 /// See https://docs.servicestack.net/ormlite/apis/schema.html#modify-custom-schema for documentation on migration schema
 /// Use the Test Explorer and run MigrationTasks -> Migrate to update to the latest migration
 /// </summary>
+
+#pragma warning disable CS8618
 public class Migration1000 : MigrationBase
 {
     public class Building
@@ -212,3 +214,4 @@ public class Migration1000 : MigrationBase
         Db.DropTable<Building>();
     }
 }
+#pragma warning restore CS8618
